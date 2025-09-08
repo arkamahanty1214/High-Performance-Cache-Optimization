@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Optimization Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Cache Optimization Simulator</h1>
+        
+        <div class="config-panel">
+            <h2>Configuration</h2>
+            <div class="input-group">
+                <label>Cache Size:</label>
+                <input type="number" id="cacheSize" value="8" min="1">
+            </div>
+            <div class="input-group">
+                <label>Associativity:</label>
+                <select id="associativity">
+                    <option value="1">Direct Mapped (1-way)</option>
+                    <option value="2">2-way Set Associative</option>
+                    <option value="4">4-way Set Associative</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Block Size:</label>
+                <input type="number" id="blockSize" value="4" min="1">
+            </div>
+            <div class="input-group">
+                <label>Prefetch Strategy:</label>
+                <select id="prefetchStrategy">
+                    <option value="none">No Prefetching</option>
+                    <option value="next-line">Next-Line Prefetching</option>
+                    <option value="stride">Stride Prefetching</option>
+                    <option value="aggressive">Aggressive Prefetching</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Memory Access Sequence:</label>
+                <textarea id="accessSequence" placeholder="Enter addresses separated by commas (e.g., 1,2,3,4,5)">1,2,3,4,5,6,7,8,1,2,9,10</textarea>
+            </div>
+            <button onclick="runSimulation()">Run Simulation</button>
+        </div>
+
+        <div class="results-panel">
+            <h2>Results</h2>
+            <div id="results"></div>
+            <div class="chart-container">
+                <canvas id="resultsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
