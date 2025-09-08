@@ -1,0 +1,44 @@
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const CacheSimulator = require('./backend/cacheSimulator');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// Routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.post('/simulate', (req, res) => {
+    try {
+        const { cacheSize, associativity, blockSize, accessSequence, prefetchStrategy } = req.body;
+        
+        const simulator = new CacheSimulator(cacheSize, associativity, blockSize, prefetchStrategy);
+        
+        // Process access sequence
+        const results = accessSequence.map(address => {
+            return simulator.accessMemory(parseInt(address));
+        });
+
+        res.json({
+            hits: simulator.hits,
+            misses: simulator.misses,
+            hitRatio: simulator.getHitRatio(),
+            results: results,
+            prefetchStats: simulator.getPrefetchStats()
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
